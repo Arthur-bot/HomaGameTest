@@ -24,12 +24,13 @@ public class Level : MonoBehaviour
     
     #region Public Methods
 
-    public static void Load(Level level)
+    public static void Load(int levelIndex)
     {
         DestroyCurrent();
 
-        var map = Instantiate(level);
-        map.name = level.name;
+        var levelPrefab = GameResources.Instance.Levels[levelIndex];
+        var level = Instantiate(levelPrefab);
+        level.name = levelPrefab.name;
     }
     
     public static void DestroyCurrent()

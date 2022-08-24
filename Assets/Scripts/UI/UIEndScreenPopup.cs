@@ -38,13 +38,13 @@ public class UIEndScreenPopup : MonoBehaviour
         
         _nextButton.onClick.AddListener(() =>
         {
-            game.LoadLevel(game.CurrentLevelIndex + 1);
+            game.LoadLevel(Level.Current.Index + 1);
             gameObject.SetActive(false);
         });
         
         _retryButton.onClick.AddListener(() =>
         {
-            game.LoadLevel(game.CurrentLevelIndex);
+            game.LoadLevel(Level.Current.Index);
             gameObject.SetActive(false);
         });
     }

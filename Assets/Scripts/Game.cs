@@ -25,17 +25,26 @@ public class Game : Singleton<Game>
 
     #region Properties
 
-    public int CurrentLevelIndex => Level.Current.Index;
-    
-    private int Gem
+    private int CurrentLevelIndex
     {
-        get => _gem;
+        get => PlayerPrefs.GetInt("CurrentLevelIndex");
         set
         {
-            if (_gem == value) return;
+            if (CurrentLevelIndex == value) return;
 
-            _gem = value;
-            GameUI.Instance.GemText.text = _gem.ToString();
+            PlayerPrefs.SetInt("CurrentLevelIndex", value);
+        }
+    }
+
+    public int Gem
+    {
+        get => PlayerPrefs.GetInt("Gem");
+        private set
+        {
+            if (Gem == value) return;
+
+            PlayerPrefs.SetInt("Gem", value);
+            GameUI.Instance.GemText.text = Gem.ToString();
         }
     }
 
@@ -73,9 +82,7 @@ public class Game : Singleton<Game>
         {
             index = 0;
         }
-        
-        var level = levels[index];
-        
+
         StartCoroutine(Coroutine());
         IEnumerator Coroutine()
         {
@@ -83,7 +90,7 @@ public class Game : Singleton<Game>
 
             yield return null;
 
-            Level.Load(level);
+            Level.Load(index);
 
             if (CurrentPlayer != null)
             {
@@ -116,9 +123,8 @@ public class Game : Singleton<Game>
 
     protected void Start()
     {
-        LoadLevel(0);
+        LoadLevel(CurrentLevelIndex);
         
-        Gem = 0;
         State = GameState.Menu;
     }
 
